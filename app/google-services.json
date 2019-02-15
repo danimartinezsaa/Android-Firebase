@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "99279206138",
+    "firebase_url": "https://notificaciones-91fad.firebaseio.com",
+    "project_id": "notificaciones-91fad",
+    "storage_bucket": "notificaciones-91fad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99279206138:android:f3cdef6399e480d9",
+        "android_client_info": {
+          "package_name": "com.dani.notificaciones"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99279206138-nhp3t76kqs6jqc4jr02mo9g5e38fjvu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dani.notificaciones",
+            "certificate_hash": "94ec21691a50d290fbba953d36c8ec23a68b6c75"
+          }
+        },
+        {
+          "client_id": "99279206138-bsji0cbkrka0urvmmplsf7qhttsemhm8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtDtTaoguuyfg11WFS_vNUEf0jMQIQQ0E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99279206138-bsji0cbkrka0urvmmplsf7qhttsemhm8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
