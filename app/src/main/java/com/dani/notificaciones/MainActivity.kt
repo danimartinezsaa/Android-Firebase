@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
     //Objeto para referenciar Database
     private var database: DatabaseReference? = null
     lateinit var misDatos : Datos
-    lateinit var usuario: String
+    // Token del dispositivo
+    private var FCMToken: String? = null
     // para actualizar los datos necesito un hash map
     val miHashMapChild = HashMap<String, Any>()
 
@@ -27,15 +28,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        // Obtengo el token del dispositivo.
+        FCMToken = FirebaseInstanceId.getInstance().token
         // referencia a la base de datos del proyecto en firebase
-        database = FirebaseDatabase.getInstance().getReference("/dispositivos")
+        database = FirebaseDatabase.getInstance().getReference("/")
 
         fab.setOnClickListener { view ->
             if(innombre.text!=null){
                 Snackbar.make(view, "Pedido enviado", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
-                misDatos = Datos("","","","","",false)
+                misDatos = Datos("","","","","","",false)
 
+                misDatos.usuario=innombre.text.toString()
                 misDatos.cafeleche = incafeleche.text.toString()
                 misDatos.cafesololargo = incafesololargo.text.toString()
                 misDatos.croissant = incroissant.text.toString()
@@ -45,9 +49,9 @@ class MainActivity : AppCompatActivity() {
 
                 // Creamos el hashMap en el objeto
                 misDatos.crearHashMapDatos()
-                usuario=innombre.text.toString()
+
                 // actualizamos la base de datos
-                miHashMapChild.put(usuario,misDatos.miHashMapDatos)
+                miHashMapChild.put(FCMToken.toString(),misDatos.miHashMapDatos)
                 // actualizamos el child
                 database!!.updateChildren(miHashMapChild)
             }else{
