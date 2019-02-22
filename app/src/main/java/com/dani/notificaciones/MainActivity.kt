@@ -42,8 +42,9 @@ class MainActivity : AppCompatActivity() {
             incroissant.setText(getIntent().getExtras().getString("croissant"))
             intortilla.setText(getIntent().getExtras().getString("tortilla"))
             intostada.setText(getIntent().getExtras().getString("tostada"))
-            if(getIntent().getExtras().getString("confirmado").toString().equals("true")){
-                checkConfirmado.setChecked(true)
+            if(getIntent().getExtras().getString("confirmado")!=null){
+                if(intent.extras.getString("confirmado").equals("true"))
+                    checkConfirmado.setChecked(true)
             }
 
         }
