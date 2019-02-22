@@ -19,20 +19,36 @@ class MainActivity : AppCompatActivity() {
     //Objeto para referenciar Database
     private var database: DatabaseReference? = null
     lateinit var misDatos : Datos
-    // Token del dispositivo
+    //Token del dispositivo
     private var FCMToken: String? = null
-    // para actualizar los datos necesito un hash map
+    //Para actualizar los datos necesito un hash map
     val miHashMapChild = HashMap<String, Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        // Obtengo el token del dispositivo.
+        //Obtengo el token del dispositivo.
         FCMToken = FirebaseInstanceId.getInstance().token
-        // referencia a la base de datos del proyecto en firebase
+        //referencia a la base de datos del proyecto en firebase
         database = FirebaseDatabase.getInstance().getReference("/")
 
+        //Para recoger los datos si abrimos la App desde la notificación, mostramos los datos que nos da
+        if (getIntent().getExtras() != null) {
+            Log.d("Notificacion","Recibiste confirmado:"+getIntent().getExtras().getString("confirmado"))
+            innombre.setText(getIntent().getExtras().getString("usuario"))
+            incafeleche.setText(getIntent().getExtras().getString("cafeleche"))
+            incafesololargo.setText(getIntent().getExtras().getString("cafesololargo"))
+            incroissant.setText(getIntent().getExtras().getString("croissant"))
+            intortilla.setText(getIntent().getExtras().getString("tortilla"))
+            intostada.setText(getIntent().getExtras().getString("tostada"))
+            if(getIntent().getExtras().getString("confirmado").toString().equals("true")){
+                checkConfirmado.setChecked(true)
+            }
+
+        }
+
+        //Listener del botón para enviar pedido
         fab.setOnClickListener { view ->
             if(innombre.text!=null){
                 Snackbar.make(view, "Pedido enviado", Snackbar.LENGTH_LONG)
@@ -47,12 +63,12 @@ class MainActivity : AppCompatActivity() {
                 misDatos.tortilla = intortilla.text.toString()
                 misDatos.confirmado = false
 
-                // Creamos el hashMap en el objeto
+                //Creamos el hashMap en el objeto
                 misDatos.crearHashMapDatos()
 
-                // actualizamos la base de datos
+                //Añadimos el hashMap a otro con el token del dispositivo, para identificarlo en la base de datos
                 miHashMapChild.put(FCMToken.toString(),misDatos.miHashMapDatos)
-                // actualizamos el child
+                //Actualizamos el child de la base
                 database!!.updateChildren(miHashMapChild)
             }else{
                 toast("Inserte Nombre para el pedido")
@@ -60,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        //Listener para actualizar los datos en tiempo real con la base de datos
         initListener()
 
     }
